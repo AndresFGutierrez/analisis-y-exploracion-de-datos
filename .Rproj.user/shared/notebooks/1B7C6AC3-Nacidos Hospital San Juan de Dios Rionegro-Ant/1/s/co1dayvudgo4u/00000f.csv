@@ -1,0 +1,2 @@
+"0","names(datos_nacimientos)[6] <- ""PESO EN GRAMOS"""
+"0","names(datos_nacimientos)[7] <- ""TALLA EN CENTÍMETROS"""

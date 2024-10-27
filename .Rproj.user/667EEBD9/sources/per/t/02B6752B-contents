@@ -1,0 +1,139 @@
+---
+title: "Nacidos Hospital San Juan de Dios Rionegro-Ant"
+author: "Andres Gutierrez"
+description: "Analisis de Nacidos en el Hospital San Juan de Dios"
+keywords: 
+    - "nacimientos"
+    - "hospital"
+    - "Rionegro"
+    - "análisis"
+    - "salud"
+execute: 
+  cache: true
+  echo: true
+format:
+  revealjs:
+    theme: "beige"
+    highlight: true
+    highlightStyle: "github"
+    transition: "slide"
+    slideNumber: true  # Muestra el número de diapositiva
+    controls: true  # Mostrar controles de navegación
+
+header-includes:
+  - |
+    <style>
+      h1 {
+        font-size: 2.5em;
+        color: #00aaff;
+      }
+      h2 {
+        font-size: 2em;
+        color: #ffaa00;
+      }
+      .reveal section {
+        overflow-y: auto;  /* Permite scroll vertical */
+      }
+      table {
+        font-size: 0.7em;  /* Ajusta el tamaño de la fuente */
+      }
+    </style>
+    ```{r, echo=TRUE, eval=TRUE}
+    knitr::opts_chunk$set(echo = TRUE, eval = TRUE, highlight = TRUE)
+    ```
+editor: visual
+---
+
+## Carga de las librerias
+
+```{r, message = FALSE, eval=TRUE, echo = TRUE}
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(knitr)
+library(kableExtra)
+```
+
+## Cargar la base de datos
+
+Extraemos los datos del excel y los convertimos en un DF
+
+```{r, echo = TRUE}
+datos_nacimientos <- read_excel("./data/Nacidos Hospital San Juan de Dios Rionegro-Ant.xlsx")
+kable(datos_nacimientos, format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1:8, width = "10em") %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+## Resumen de las columnas y el tipo de variables que la conforman
+
+```{r, echo = TRUE}
+# Estructura y tipo de dato
+str(datos_nacimientos)
+```
+
+## Exploracion de la base datos
+
+Primeras filas de cada columna del DF
+
+```{r, echo = TRUE}
+# Ver las primeras filas
+head(datos_nacimientos)
+```
+
+## Exploracion de la base datos
+
+Resumen estadistico de las columnas del DF
+
+```{r, echo = TRUE}
+# Resumen estadístico
+summary(datos_nacimientos)
+
+```
+
+## Preparacion del marco de datos
+
+Con el paquete lubridate nos aeguramos de guardar tanto la fecha como la hora en el formato correcto
+
+```{r, echo = TRUE}
+# Eliminar espacios en blanco
+datos_nacimientos$`FECHA NACIMIENTO` <- trimws(datos_nacimientos$`FECHA NACIMIENTO`)
+#Conversion
+datos_nacimientos$`FECHA NACIMIENTO` <- parse_date_time(datos_nacimientos$`FECHA NACIMIENTO`, orders = "mdy HMS")
+kable(datos_nacimientos, format = "html") %>%
+  kable_styling(full_width = FALSE) %>%
+  column_spec(1:8, width = "10em") %>%
+  scroll_box(width = "100%", height = "400px")
+```
+
+## Preparacion del marco de datos
+
+Identificamos si hay valores NA
+
+```{r, echo = TRUE}
+is.na(datos_nacimientos)
+```
+
+## Preparacion del marco de datos
+
+Debido a que identificamos valores NA los contamos
+
+```{r, echo = TRUE}
+sum(is.na(datos_nacimientos))
+```
+
+## Renombra las columnas Peso (gramos) y Talla (centímetros)
+
+```{r, echo = TRUE}
+names(datos_nacimientos)[6] <- "PESO EN GRAMOS"
+names(datos_nacimientos)[7] <- "TALLA EN CENTÍMETROS"
+```
+
+## Renombrar otras columnas
+
+```{r, echo = TRUE}
+names(datos_nacimientos)[1] <- "AÑO DE NACIMIENTO"
+names(datos_nacimientos)[9] <- "TIEMPO GESTACIÓN (semanas)"
+names(datos_nacimientos)[10] <- "NÚMERO CONSULTAS PRENATALES"
+```

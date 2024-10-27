@@ -1,0 +1,3 @@
+"0","names(datos_nacimientos)[1] <- ""AÑO DE NACIMIENTO"""
+"0","names(datos_nacimientos)[9] <- ""TIEMPO GESTACIÓN (semanas)"""
+"0","names(datos_nacimientos)[10] <- ""NÚMERO CONSULTAS PRENATALES"""

@@ -1,0 +1,5 @@
+"0","datos_nacimientos <- read_excel(""./data/Nacidos Hospital San Juan de Dios Rionegro-Ant.xlsx"")"
+"0","kable(datos_nacimientos, format = ""html"") %>%"
+"0","  kable_styling(full_width = FALSE) %>%"
+"0","  column_spec(1:8, width = ""10em"") %>%"
+"0","  scroll_box(width = ""100%"", height = ""400px"")"
